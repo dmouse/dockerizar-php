@@ -1,0 +1,35 @@
+
+version: '2'
+
+services:
+
+  web:
+    image: somos/php
+    environment:
+      - XDEBUG=true
+      - DNSDOCK_NAME=www
+      - DNSDOCK_IMAGE=somos
+    volumes:
+      - ./:/var/www/html
+
+  cache:
+    image: redis
+
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=toor
+      - DNSDOCK_NAME=db
+      - DNSDOCK_IMAGE=somos
+    volumes:
+      - mysql:/var/lib/mysql
+
+  cli:
+    image: somos/php-cli
+    volumes:
+      - ./:/app
+      - ./setup.sh:/app/setup.sh
+    entrypoint: [ "/app/setup.sh" ]
+
+volumes:
+  mysql:

@@ -11,6 +11,11 @@ services:
       - DNSDOCK_IMAGE=somos
     volumes:
       - ./:/var/www/html
+    links:
+      - db
+      - cache:redis
+    ports:
+      - "8080:80"
 
   cache:
     image: redis
@@ -19,6 +24,7 @@ services:
     image: mysql:5.7
     environment:
       - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_DATABASE=drupal
       - DNSDOCK_NAME=db
       - DNSDOCK_IMAGE=somos
     volumes:

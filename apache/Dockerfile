@@ -19,7 +19,8 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install gd opcache mbstring pdo pdo_mysql pdo_pgsql pgsql zip bz2 iconv mcrypt \
     && pecl install xdebug-2.5.0 \
-    && docker-php-ext-enable xdebug
+    && docker-php-ext-enable xdebug \
+    && a2enmod headers && a2enmod rewrite
 
 RUN cd /usr/local/bin \
     && curl -L https://github.com/kelseyhightower/confd/releases/download/v0.11.0/confd-0.11.0-linux-amd64 -o confd \
